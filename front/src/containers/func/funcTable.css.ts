@@ -17,6 +17,9 @@ export const manager = style({
   justifyContent: 'center',
   alignItems: 'center'
 })
+
+
+
 globalStyle(`${manager}>p`, {
   margin: `0 ${vars.space.tiny} 0 0`
 })
@@ -78,11 +81,11 @@ globalStyle(`${table} > tbody > tr > td:nth-child(1)`, {
 globalStyle(`${table}>tbody>tr>td`, {
   fontSize: vars.fontSize.caption,
   color: vars.color.black,
-  textAlign: 'center',
   padding: '12px 12px',
   borderBottom: `2px solid ${vars.color.gray}`,
   fontWeight: 500,
-  cursor:'pointer',
+  textAlign: 'center',
+
 })
 
 globalStyle(`${table} > tbody > tr > td input:focus`,{
@@ -94,7 +97,22 @@ globalStyle(`${table} > tbody > tr > td input`,{
   fontWeight: 600,
   textAlign: 'center',
 });
+
 globalStyle(`${table} > tbody > tr > td input`,{
   width: '100%',
   height: '100%'
 });
+
+
+
+export const clickBackground=style({
+
+  width:'100vw',
+  height:'100vh',
+  position:'absolute',
+  top:0,
+  right:0,
+  bottom:0,
+  left:0,
+  zIndex:1,
+})
