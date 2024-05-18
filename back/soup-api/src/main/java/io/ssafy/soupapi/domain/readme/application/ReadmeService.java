@@ -12,7 +12,10 @@ public class ReadmeService {
     private final ReadmeRepository readmeRepository;
 
     public BasicTemplate getTemplate(String templateName) {
-        System.out.println(readmeRepository.findByTitle(templateName));
         return readmeRepository.findByTitle(templateName);
+    }
+
+    public BasicTemplate makeDefaultProjectReadme(String projectId, String templateName) {
+        return null;
     }
 }
