@@ -47,7 +47,6 @@ public class ProjectUsecaseImpl implements ProjectUsecase {
     @Override
     public CreateAiProposal createAiProposal(CreateAiProposal createAiProposal) {
         CreateClaudeMessageReq createClaudeMessageReq = createAiProposal.toMessageDto().toCreateClaudeMessageReq();
-        log.info(createClaudeMessageReq);
         CreateClaudeMessageRes claudeRes = claudeFeignClient.getClaudeMessage(createClaudeMessageReq);
         log.info(claudeRes);
 
