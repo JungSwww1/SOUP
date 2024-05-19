@@ -30,7 +30,6 @@ public class RNotiSubscriber implements MessageListener {
         String topicName = new String(pattern);
         String receiverId = topicName.substring(5); // noti:{memberId}에서 memberId 부분
         Event event = (Event) valueSerializer.deserialize(message.getBody());
-        log.info("subscriber가 역직렬화한 event는 {}", event);
         emitterNotiService.notify(receiverId, event);
     }
 
