@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
@@ -49,9 +50,18 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorResponse> handleAccessDeniedExceptionHandler(AccessDeniedException e) {
-        log.info("handleAccessDeniedExceptionHandler에 오셨습니다.");
+        log.info("[ControllerAdvice] Access Denied Exception 처리");
         var response = ErrorResponse.fail(HttpStatus.UNAUTHORIZED.value(), "UNAUTHORIZED", e.getMessage());
         return ResponseEntity.status(response.status()).body(response);
+    }
+
+    /**
+     * SSE 연결 타임 아웃 시
+     */
+    @ExceptionHandler(AsyncRequestTimeoutException.class)
+    public ResponseEntity<ErrorResponse> handleAsyncTimeoutExceptions(AsyncRequestTimeoutException e) {
+        log.info("[ControllerAdvice] SSE 연결 Async Timeout exception 발생. 재연결을 요청 받아야 합니다.");
+        return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(null);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -81,7 +91,7 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(RuntimeException.class)
     protected ResponseEntity<ErrorResponse> handleRuntimeExceptions(RuntimeException e) {
-        log.info("handleRuntimeExceptions에 오셨습니다.");
+        log.info("[ControllerAdvice] Runtime Exception 처리");
         e.printStackTrace();
         var response = ErrorResponse.fail(ErrorCode.INTERNAL_SERVER_ERROR, e.getLocalizedMessage());
         HttpHeaders headers = new HttpHeaders();
@@ -97,7 +107,7 @@ public class GlobalControllerAdvice {
      */
     @ExceptionHandler({Exception.class})
     protected ResponseEntity<ErrorResponse> handleAllExceptions(Exception e) {
-        log.info("handleAllExceptions에 오셨습니다.");
+        log.info("[ControllerAdvice] 모든 Exception 처리");
         e.printStackTrace();
         var response = ErrorResponse.fail(ErrorCode.INTERNAL_SERVER_ERROR, e.getMessage());
         HttpHeaders headers = new HttpHeaders();

@@ -54,8 +54,7 @@ public class SecurityConfig {
                 "http://localhost:8080",
                 "http://localhost:3000",
                 "https://so-up.store",
-                "https://jiangxy.github.io", // websocket stomp 테스팅 : https://github.com/jiangxy/websocket-debug-tool
-                "http://70.12.246.249:3000" // for ziu
+                "https://jiangxy.github.io" // websocket stomp 테스팅 : https://github.com/jiangxy/websocket-debug-tool
         );
 
         return request -> {
@@ -93,6 +92,8 @@ public class SecurityConfig {
                 )
                 .addFilterBefore(new JwtAuthenticateFilter(jwtService), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(handler -> handler.authenticationEntryPoint(entryPoint))
+//                .exceptionHandling(handler -> handler.accessDeniedHandler(new CustomAccessDeniedHandler()))
+
         ;
 
         SecurityFilterChain chain = http.build();
