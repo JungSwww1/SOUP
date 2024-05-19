@@ -5,6 +5,10 @@
 `File` -> `Setting` -> `Build, Execution, Deployment` -> `Build Tools` -> `Gradle` -> `Gradle JVM`  
 자바 버전을 프로젝트 Java 버전과 맞춰주세요!
 
+## Soup 좀 더 활용하기!
+`global`/`common` 폴더의 `code`, `request`, `resposne` 안에 있는 클래스 파일을 프로젝트에서 적절히 활용해 봐요!
+
+
 ### Reference Documentation
 
 For further reference, please consider the following sections:
