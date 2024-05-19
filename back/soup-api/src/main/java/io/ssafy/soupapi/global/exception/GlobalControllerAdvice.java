@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
@@ -52,6 +53,15 @@ public class GlobalControllerAdvice {
         log.info("handleAccessDeniedExceptionHandler에 오셨습니다.");
         var response = ErrorResponse.fail(HttpStatus.UNAUTHORIZED.value(), "UNAUTHORIZED", e.getMessage());
         return ResponseEntity.status(response.status()).body(response);
+    }
+
+    /**
+     * SSE 연결 타임 아웃 시
+     */
+    @ExceptionHandler(AsyncRequestTimeoutException.class)
+    public ResponseEntity<ErrorResponse> handleAsyncTimeoutExceptions(AsyncRequestTimeoutException e) {
+        log.info("SSE 연결 Async Timeout exception 발생. 재연결을 요청받아야 합니다.");
+        return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(null);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
