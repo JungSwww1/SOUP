@@ -1,5 +1,7 @@
 package io.ssafy.soupapi.global.exception;
 
+import io.openvidu.java.client.OpenViduException;
+import io.openvidu.java.client.OpenViduHttpException;
 import io.ssafy.soupapi.global.common.code.ErrorCode;
 import io.ssafy.soupapi.global.common.response.ErrorResponse;
 import io.ssafy.soupapi.global.security.exception.AccessTokenException;
@@ -62,6 +64,15 @@ public class GlobalControllerAdvice {
     public ResponseEntity<ErrorResponse> handleAsyncTimeoutExceptions(AsyncRequestTimeoutException e) {
         log.info("[ControllerAdvice] SSE 연결 Async Timeout exception 발생. 재연결을 요청 받아야 합니다.");
         return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(null);
+    }
+
+    /**
+     * OpenVidu 에러
+     */
+    @ExceptionHandler(OpenViduException.class)
+    public ResponseEntity<ErrorResponse> handleOpenViduExceptions(OpenViduException e) {
+        log.info("[ControllerAdvice] OpenVidu 관련 에러 발생: {}", e.getClass());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
