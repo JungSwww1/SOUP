@@ -2,6 +2,7 @@ package io.ssafy.soupapi.global.security.filter;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
  * Spring Security는 사용자가 인증되지 않았거나 AuthenticationException 발생 시 AuthenticationEntryPoint에서 예외 처리를 시도한다.
  * 그러므로 AuthenticationEntryPoint를 적절히 구현해 Spring Security에서 예외를 처리할 수 있다.
  */
+@Slf4j
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
@@ -28,6 +30,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     // @ControllerAdvice에서 모든 예외를 처리하여 응답할 것이므로 여기에 별다른 로직은 작성하지 않고 HandlerExceptionResolver에 예외 처리를 위임한다.
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) {
+        log.info("Jwt Authentication Entr Point - commence() 도착");
         resolver.resolveException(request, response, null, (Exception) request.getAttribute("tokenException"));
     }
 }

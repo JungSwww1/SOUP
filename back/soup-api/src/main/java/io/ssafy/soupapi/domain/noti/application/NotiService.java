@@ -90,8 +90,9 @@ public class NotiService {
 
         GetNotiRes response = GetNotiRes.builder().build();
         for (MNoti mNoti : result) {
+            Member mentioner = mentionerMap.get(mNoti.getSenderId());
             NewNotiRes newNotiRes = mNoti.generateNewNotiRes(
-                mentionerMap.get(mNoti.getSenderId()).getProfileImageUrl(),
+                mentioner == null ? null : mentioner.getProfileImageUrl(),
                 projectNameMap.get(mNoti.getProjectId())
             );
             response.getNotiList().add(newNotiRes);
