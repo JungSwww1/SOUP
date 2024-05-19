@@ -89,6 +89,9 @@ public class ColumnDefinition {
 
     public String getValidParamName() {
         String validName = VALID_CHAR_PATTERN.matcher(name).replaceAll("");
+        if (validName.isBlank()) {
+            return "";
+        }
         if (Character.isDigit(validName.charAt(0))) {
             validName = "_" + validName;
         }
