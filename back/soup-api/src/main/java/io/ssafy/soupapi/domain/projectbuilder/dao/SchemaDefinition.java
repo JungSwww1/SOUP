@@ -49,14 +49,14 @@ public class SchemaDefinition {
 
         if (relation.getRelationType() == ONE) {
             sb.append('\t').append(String.format(
-                            "@OneToOne(mappedBy = \"%s\")", convertToSnakeCase(parent.getName())))
+                            "@OneToOne(mappedBy = \"%s\")", convertToCamelCase(parent.getName())))
                     .append('\n');
             sb.append('\t').append(
                             String.format("private %s %s;", convertToPascalCase(child.getName()), convertToCamelCase(child.getName())))
                     .append('\n');
         } else if (relation.getRelationType() == MANY) {
             sb.append('\t').append(String.format("@OneToMany(mappedBy = \"%s\")",
-                    convertToSnakeCase(parent.getName()))).append('\n');
+                    convertToCamelCase(parent.getName()))).append('\n');
             sb.append('\t').append(String.format("private List<%s> %s;",
                     convertToPascalCase(child.getName()), convertToCamelCase(child.getName()))).append('\n');
         }

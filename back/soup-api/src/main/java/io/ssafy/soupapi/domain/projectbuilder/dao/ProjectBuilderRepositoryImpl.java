@@ -640,8 +640,7 @@ public class ProjectBuilderRepositoryImpl implements ProjectBuilderRepository {
             try {
                 columns.put(column.getValidParamName(), column.getColumnVariable());
             } catch (Exception e) {
-                e.printStackTrace();
-                log.info("[빌드] 칼럼명: " + column.getName() + " 생성 실패");
+                log.info("[빌드] 칼럼명: " + column.getName() + " 생성 실패 " + e.getMessage());
             }
         }
 
