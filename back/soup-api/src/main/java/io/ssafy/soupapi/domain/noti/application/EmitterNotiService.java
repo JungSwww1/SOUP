@@ -30,7 +30,10 @@ public class EmitterNotiService {
         emitterRepository.saveEmitter(emitterId, emitter);
 
         emitter.onCompletion(() -> emitterRepository.deleteEmitterById(emitterId));
-        emitter.onTimeout(() -> emitterRepository.deleteEmitterById(emitterId));
+        emitter.onTimeout(() -> {
+            log.info("SSE 타임아웃 발생");
+            emitterRepository.deleteEmitterById(emitterId);
+        });
         emitter.onError((e) -> emitterRepository.deleteEmitterById(emitterId));
 
         return emitter;
@@ -47,7 +50,7 @@ public class EmitterNotiService {
         } else {
             eventId = String.valueOf(System.currentTimeMillis());
         }
-        log.info("eventID는 : {}", eventId);
+//        log.info("eventID는 : {}", eventId);
 
         emitterMap.forEach(
             (key, emitter) -> {
@@ -68,6 +71,7 @@ public class EmitterNotiService {
                     .id(eventId)
                     .name(event.getNotiType().getEventName())
                     .data(sseNotiRes)
+                    .reconnectTime(DEFAULT_TIMEOUT)
             );
         } catch (IOException e) {
             emitterRepository.deleteEmitterById(emitterId);

@@ -50,7 +50,7 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorResponse> handleAccessDeniedExceptionHandler(AccessDeniedException e) {
-        log.info("handleAccessDeniedExceptionHandler에 오셨습니다.");
+        log.info("[ControllerAdvice] Access Denied Exception 처리");
         var response = ErrorResponse.fail(HttpStatus.UNAUTHORIZED.value(), "UNAUTHORIZED", e.getMessage());
         return ResponseEntity.status(response.status()).body(response);
     }
@@ -60,7 +60,7 @@ public class GlobalControllerAdvice {
      */
     @ExceptionHandler(AsyncRequestTimeoutException.class)
     public ResponseEntity<ErrorResponse> handleAsyncTimeoutExceptions(AsyncRequestTimeoutException e) {
-        log.info("SSE 연결 Async Timeout exception 발생. 재연결을 요청받아야 합니다.");
+        log.info("[ControllerAdvice] SSE 연결 Async Timeout exception 발생. 재연결을 요청 받아야 합니다.");
         return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(null);
     }
 
@@ -91,7 +91,7 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(RuntimeException.class)
     protected ResponseEntity<ErrorResponse> handleRuntimeExceptions(RuntimeException e) {
-        log.info("handleRuntimeExceptions에 오셨습니다.");
+        log.info("[ControllerAdvice] Runtime Exception 처리");
         e.printStackTrace();
         var response = ErrorResponse.fail(ErrorCode.INTERNAL_SERVER_ERROR, e.getLocalizedMessage());
         HttpHeaders headers = new HttpHeaders();
@@ -107,7 +107,7 @@ public class GlobalControllerAdvice {
      */
     @ExceptionHandler({Exception.class})
     protected ResponseEntity<ErrorResponse> handleAllExceptions(Exception e) {
-        log.info("handleAllExceptions에 오셨습니다.");
+        log.info("[ControllerAdvice] 모든 Exception 처리");
         e.printStackTrace();
         var response = ErrorResponse.fail(ErrorCode.INTERNAL_SERVER_ERROR, e.getMessage());
         HttpHeaders headers = new HttpHeaders();
