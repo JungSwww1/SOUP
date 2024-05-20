@@ -494,7 +494,8 @@ public class ProjectBuilderRepositoryImpl implements ProjectBuilderRepository {
                     @Operation(summary = ":api-summary", description = ":api-description")
                     :api-http-method(":api-uri")
                     public :responsebody-name :controller-method-name(
-                    :parameters) {
+                        :parameters
+                    ) {
                         return null;
                     }
                 """;
