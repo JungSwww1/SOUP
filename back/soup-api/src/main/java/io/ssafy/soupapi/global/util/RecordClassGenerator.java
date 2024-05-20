@@ -68,10 +68,28 @@ public class RecordClassGenerator {
 
         sb.append(") {}\n");
 
-        File file = new File(destination + File.separator + className + ".java");
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-            bw.write(sb.toString());
-            bw.flush();
+        String originalClassName = className;
+        int counter = 1;
+
+        while (true) {
+            File file = new File(destination + File.separator + className + ".java");
+
+            if (!file.exists()) {
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+                    bw.write(sb.toString());
+                    bw.flush();
+                }
+                break;
+            } else {
+                char lastChar = className.charAt(className.length() - 1);
+                if (Character.isDigit(lastChar)) {
+                    int lastNumber = Character.getNumericValue(lastChar);
+                    className = className.substring(0, className.length() - 1) + (lastNumber + 1);
+                } else {
+                    className = originalClassName + counter;
+                    counter++;
+                }
+            }
         }
     }
 
