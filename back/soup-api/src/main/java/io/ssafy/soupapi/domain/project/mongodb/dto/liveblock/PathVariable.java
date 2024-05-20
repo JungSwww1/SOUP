@@ -2,6 +2,7 @@ package io.ssafy.soupapi.domain.project.mongodb.dto.liveblock;
 
 import io.ssafy.soupapi.domain.project.mongodb.entity.apidocs.ApiVariable;
 import io.ssafy.soupapi.domain.project.mongodb.entity.apidocs.ApiVariableType;
+import io.ssafy.soupapi.global.util.StringParserUtil;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -13,6 +14,9 @@ public record PathVariable(
         String desc
 ) {
     public static ApiVariable toApiVariable(PathVariable pathVariable) {
+        if (StringParserUtil.isNullOrEmpty(pathVariable.name())) {
+            return null;
+        }
         return ApiVariable.builder()
                 .name(pathVariable.name())
                 .type(pathVariable.getType())

@@ -3,6 +3,7 @@ package io.ssafy.soupapi.domain.project.mongodb.dto.liveblock;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.ssafy.soupapi.domain.project.mongodb.entity.apidocs.ApiVariable;
 import io.ssafy.soupapi.domain.project.mongodb.entity.apidocs.ApiVariableType;
+import io.ssafy.soupapi.global.util.StringParserUtil;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -17,6 +18,9 @@ public record QueryParam(
         String defaultValue
 ) {
     public static ApiVariable toApiVariable(QueryParam queryParam) {
+        if (StringParserUtil.isNullOrEmpty(queryParam.name())) {
+            return null;
+        }
         return ApiVariable.builder()
                 .name(queryParam.name())
                 .type(queryParam.getType())
