@@ -211,9 +211,6 @@ public class ProjectBuilderRepositoryImpl implements ProjectBuilderRepository {
             readme.append("\n\n---\n\n");
         }
 
-        log.info("+==========================================+");
-        log.info(readme.toString());
-        log.info("+==========================================+");
         return readme.toString();
     }
 

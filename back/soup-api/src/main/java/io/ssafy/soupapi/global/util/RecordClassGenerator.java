@@ -43,6 +43,17 @@ public class RecordClassGenerator {
                 String nestedClassName = capitalize(fieldName);
                 generateRecordClass(fieldValue, nestedClassName, packagePath, destination);
                 sb.append("\t").append(nestedClassName).append(" ").append(fieldName);
+            } else if (fieldValue.isArray()) {
+                JsonNode firstElement = fieldValue.get(0);
+                String elementType;
+                if (firstElement.isObject()) {
+                    String nestedClassName = capitalize(fieldName) + "Item";
+                    generateRecordClass(firstElement, nestedClassName, packagePath, destination);
+                    elementType = nestedClassName;
+                } else {
+                    elementType = getFieldType(firstElement);
+                }
+                sb.append("\t").append("List<").append(elementType).append(">").append(" ").append(fieldName);
             } else {
                 String fieldType = getFieldType(fieldValue);
                 sb.append("\t").append(fieldType).append(" ").append(fieldName);
