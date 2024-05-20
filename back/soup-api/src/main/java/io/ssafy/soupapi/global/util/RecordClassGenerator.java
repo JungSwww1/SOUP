@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
+import static io.ssafy.soupapi.global.util.StringParserUtil.convertToCamelCase;
+import static io.ssafy.soupapi.global.util.StringParserUtil.convertToPascalCase;
+
 @Component
 @RequiredArgsConstructor
 public class RecordClassGenerator {
@@ -40,23 +43,23 @@ public class RecordClassGenerator {
             JsonNode fieldValue = field.getValue();
 
             if (fieldValue.isObject()) {
-                String nestedClassName = capitalize(fieldName);
+                String nestedClassName = convertToPascalCase(fieldName);
                 generateRecordClass(fieldValue, nestedClassName, packagePath, destination);
-                sb.append("\t").append(nestedClassName).append(" ").append(fieldName);
+                sb.append("\t").append(nestedClassName).append(" ").append(convertToCamelCase(fieldName));
             } else if (fieldValue.isArray()) {
                 JsonNode firstElement = fieldValue.get(0);
                 String elementType;
                 if (firstElement.isObject()) {
-                    String nestedClassName = capitalize(fieldName) + "Item";
+                    String nestedClassName = convertToPascalCase(fieldName) + "Item";
                     generateRecordClass(firstElement, nestedClassName, packagePath, destination);
                     elementType = nestedClassName;
                 } else {
                     elementType = getFieldType(firstElement);
                 }
-                sb.append("\t").append("List<").append(elementType).append(">").append(" ").append(fieldName);
+                sb.append("\t").append("List<").append(convertToPascalCase(elementType)).append(">").append(" ").append(convertToCamelCase(fieldName));
             } else {
                 String fieldType = getFieldType(fieldValue);
-                sb.append("\t").append(fieldType).append(" ").append(fieldName);
+                sb.append("\t").append(convertToPascalCase(fieldType)).append(" ").append(convertToCamelCase(fieldName));
             }
 
             if (fields.hasNext()) {
