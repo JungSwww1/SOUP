@@ -15,6 +15,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -64,10 +65,10 @@ public record LiveApiDetail(
                             ? null
                             : liveApiDetail.responseBody().data())
                     .pathVariables(liveApiDetail.pathVariable() != null
-                            ? liveApiDetail.pathVariable().stream().map(PathVariable::toApiVariable).toList()
+                            ? liveApiDetail.pathVariable().stream().map(PathVariable::toApiVariable).filter(Objects::nonNull).toList()
                             : List.of())
                     .queryParameters(liveApiDetail.queryParam() != null
-                            ? liveApiDetail.queryParam().stream().map(QueryParam::toApiVariable).toList()
+                            ? liveApiDetail.queryParam().stream().map(QueryParam::toApiVariable).filter(Objects::nonNull).toList()
                             : List.of())
                     .build();
         }

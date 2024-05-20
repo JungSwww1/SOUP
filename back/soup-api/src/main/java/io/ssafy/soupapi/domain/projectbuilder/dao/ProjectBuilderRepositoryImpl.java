@@ -211,9 +211,6 @@ public class ProjectBuilderRepositoryImpl implements ProjectBuilderRepository {
             readme.append("\n\n---\n\n");
         }
 
-        log.info("+==========================================+");
-        log.info(readme.toString());
-        log.info("+==========================================+");
         return readme.toString();
     }
 
@@ -526,7 +523,7 @@ public class ProjectBuilderRepositoryImpl implements ProjectBuilderRepository {
             parameters.add(makeControllerRequestBodyAttr(apiDoc));
         }
 
-        mapUtil.addValue("parameters", String.join(",\n\t\t\t", parameters));
+        mapUtil.addValue("parameters", String.join(",\n\t\t\t\t", parameters));
         return mapUtil.replace();
     }
 
