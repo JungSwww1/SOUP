@@ -523,7 +523,7 @@ public class ProjectBuilderRepositoryImpl implements ProjectBuilderRepository {
             parameters.add(makeControllerRequestBodyAttr(apiDoc));
         }
 
-        mapUtil.addValue("parameters", String.join(",\n\t\t\t", parameters));
+        mapUtil.addValue("parameters", String.join(",\n\t\t\t\t", parameters));
         return mapUtil.replace();
     }
 
