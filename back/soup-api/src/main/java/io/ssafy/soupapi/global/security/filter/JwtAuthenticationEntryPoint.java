@@ -30,7 +30,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     // @ControllerAdvice에서 모든 예외를 처리하여 응답할 것이므로 여기에 별다른 로직은 작성하지 않고 HandlerExceptionResolver에 예외 처리를 위임한다.
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) {
-        log.info("Jwt Authentication Entr Point - commence() 도착");
+        log.info("Jwt Authentication Entry Point - commence() 도착");
         resolver.resolveException(request, response, null, (Exception) request.getAttribute("tokenException"));
     }
 }
