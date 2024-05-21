@@ -57,14 +57,17 @@ public class ProjectUsecaseController {
 //                response
 //        );
 
-        return BaseResponse.success(
-                SuccessCode.SELECT_SUCCESS,
+        CreateAiProposal response =
                 CreateAiProposal.builder()
                         .background(List.of("반복되는 프로젝트 초기 설계 작업을 자동화하여 개발 생산성을 높일 수 있습니다."))
                         .intro(List.of("웹 기반 플랫폼에서 실시간으로 팀원들과 협업하며 프로젝트 코드를 동시에 편집할 수 있습니다."))
                         .target(List.of("동시 편집, 음성 채팅, ERD, API 설계등 개발에 필요한 다양한 기능을 하나의 플랫폼에서 제공합니다."))
                         .result(List.of("Spring 프레임워크를 처음 접하는 개발자들도 쉽게 프로젝트를 시작할 수 있도록 도와줍니다."))
-                        .build()
+                        .build();
+        log.info("클라에 이걸 내려보낼게요? {}", response);
+        return BaseResponse.success(
+                SuccessCode.SELECT_SUCCESS,
+                response
         );
     }
 
