@@ -20,7 +20,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class EmitterNotiService {
 
-    private static final Long DEFAULT_TIMEOUT = 1000L * 30; // 기본 타임 아웃 == 1시간
+    private static final Long DEFAULT_TIMEOUT = 1000L * 60 * 60; // 기본 타임 아웃 == 1시간
     private final NotiRepository notiRepository;
     private final EmitterRepository emitterRepository;
 
