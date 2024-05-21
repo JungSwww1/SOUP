@@ -26,6 +26,7 @@ public class TypeMapper {
         TYPE_MAPPINGS.put("INTEGER", "Integer");
         TYPE_MAPPINGS.put("REAL", "Double");
         TYPE_MAPPINGS.put("BIGINT", "Long");
+        TYPE_MAPPINGS.put("BINARY", "UUID");
     }
 
     public static String mapToJavaType(String dbType) {
